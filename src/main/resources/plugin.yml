@@ -1,0 +1,29 @@
+name: LemonZero
+version: '${project.version}'
+main: me.fast.lemonzero.LemonZero
+api-version: 1.17
+authors: [ AnonymouslyFast, YouCanDream ]
+description: Main Plugin for LemonZero
+commands:
+  balance:
+    usage: /balance [player]
+    aliases: bal
+  economy:
+    usage: /economy <add/set/remove> <player> <amount>
+    aliases: eco
+  pay:
+    usage: /pay <player> <amount>
+  staffchat:
+    usage: /staffchat [message]
+    aliases: sc
+  clearchat:
+    usage: /clearchat
+    aliases: cc
+  kick:
+    usage: /kick <player> [-s] <reason>
+  check:
+    usage: /check <player>
+    description: Checks a players punishment history.
+  shop:
+    description: Main command for Server!
+    usage: <command>
