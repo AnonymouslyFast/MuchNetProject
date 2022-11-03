@@ -17,6 +17,7 @@
 
 
 
+
  public class BlocksShop
  {
    public static Inventory block;
@@ -45,10 +46,11 @@
      ItemMeta am = a.getItemMeta();
      List<String> al = new ArrayList<>();
      al.add(ChatColor.cc("&3&lClick to go back to the main shop GUI"));
-     am.setLore(al);
+     Objects.requireNonNull(am).setLore(al);
      am.setDisplayName("&d&lBack");
 
 
+     //Fifth Row
      block.setItem(37, fill);
      block.setItem(38, fill);
      block.setItem(39, fill);
@@ -58,6 +60,9 @@
      block.setItem(44, fill);
      block.setItem(40, head);
      block.setItem(36, a);
+
+     //First Row
+
 
 
 

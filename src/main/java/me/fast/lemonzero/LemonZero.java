@@ -2,6 +2,8 @@ package me.fast.lemonzero;
 import java.awt.Color;
 import java.time.Instant;
 import java.util.Objects;
+
+
 import me.fast.lemonzero.Discord.discordListeners.discordListeners;
 import me.fast.lemonzero.Minecraft.Economy.EconomyCommand;
 import me.fast.lemonzero.Minecraft.Economy.SLAPI;
@@ -21,9 +23,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
+import static me.fast.lemonzero.MongoDB.setUp.MongoConnect;
 
 
- public final class LemonZero
+public final class LemonZero
    extends JavaPlugin
  {
   public static JDA jda;
@@ -33,6 +36,7 @@ import org.reflections.Reflections;
    private static LemonZero plugin;
 
    public void onEnable() {
+       MongoConnect();
      getConfig().options().copyDefaults();
      saveDefaultConfig();
 
@@ -56,15 +60,17 @@ import org.reflections.Reflections;
      }
 
      String mcchatid = getConfig().getString("minecraft-channel-id");
-     mcchat = jda.getTextChannelById(Objects.<String>requireNonNull(mcchatid));
+     mcchat = jda.getTextChannelById(Objects.requireNonNull(mcchatid));
 
      String logchatid = getConfig().getString("log-channel-id");
-     logChan = jda.getTextChannelById(Objects.<String>requireNonNull(logchatid));
+     logChan = jda.getTextChannelById(Objects.requireNonNull(logchatid));
 
      String staffID = getConfig().getString("StaffChat-Channel-id");
-     staff = jda.getTextChannelById(Objects.<String>requireNonNull(staffID));
+     staff = jda.getTextChannelById(Objects.requireNonNull(staffID));
 
-    jda.addEventListener(new Object[] { new discordListeners() });
+    jda.addEventListener(new discordListeners());
+
+
 
 
 
@@ -80,7 +86,7 @@ import org.reflections.Reflections;
 
 
          String packname = getClass().getPackage().getName();
-     for (Class<?> clazz : (Iterable<Class<?>>)(new Reflections(packname + ".Minecraft.Listeners", new org.reflections.scanners.Scanner[0])).getSubTypesOf(Listener.class)) {
+     for (Class<?> clazz : (new Reflections(packname + ".Minecraft.Listeners")).getSubTypesOf(Listener.class)) {
        try {
          Listener listener = (Listener) clazz.getDeclaredConstructor(new Class[0]).newInstance(new Object[0]);
          getServer().getPluginManager().registerEvents(listener, this);
@@ -90,7 +96,7 @@ import org.reflections.Reflections;
        }
      }
 
-   for (Class<?> clazz : (Iterable<Class<?>>)(new Reflections(packname + ".Discord.Listeners", new org.reflections.scanners.Scanner[0])).getSubTypesOf(Listener.class)) {
+   for (Class<?> clazz : (new Reflections(packname + ".Discord.Listeners")).getSubTypesOf(Listener.class)) {
        try {
          Listener listener = (Listener) clazz.getDeclaredConstructor(new Class[0]).newInstance(new Object[0]);
          getServer().getPluginManager().registerEvents(listener, this);
@@ -100,7 +106,7 @@ import org.reflections.Reflections;
       }
      }
 
-     for (Class<?> clazz : (Iterable<Class<?>>)(new Reflections(packname + ".Minecraft.Economy.Shop.Listeners", new org.reflections.scanners.Scanner[0])).getSubTypesOf(Listener.class)) {
+     for (Class<?> clazz : (new Reflections(packname + ".Minecraft.Economy.Shop.Listeners")).getSubTypesOf(Listener.class)) {
        try {
         Listener listener = (Listener) clazz.getDeclaredConstructor(new Class[0]).newInstance(new Object[0]);
         getServer().getPluginManager().registerEvents(listener, this);
