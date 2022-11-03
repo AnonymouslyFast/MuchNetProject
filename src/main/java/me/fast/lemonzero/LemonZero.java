@@ -23,12 +23,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
-import static me.fast.lemonzero.MongoDB.setUp.MongoConnect;
 
+public final class LemonZero extends JavaPlugin {
 
-public final class LemonZero
-   extends JavaPlugin
- {
   public static JDA jda;
    public static TextChannel mcchat;
    public static TextChannel logChan;
@@ -36,7 +33,6 @@ public final class LemonZero
    private static LemonZero plugin;
 
    public void onEnable() {
-       MongoConnect();
      getConfig().options().copyDefaults();
      saveDefaultConfig();
 
