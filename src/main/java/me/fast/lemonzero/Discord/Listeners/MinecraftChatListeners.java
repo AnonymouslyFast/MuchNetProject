@@ -14,7 +14,8 @@
  import org.bukkit.event.player.PlayerJoinEvent;
  import org.bukkit.event.player.PlayerQuitEvent;
 
-
+ import static me.fast.lemonzero.Minecraft.Utitites.LuckPerms.getPlayerGroup;
+ import static me.fast.lemonzero.Minecraft.Utitites.LuckPerms.possibleGroups;
 
 
  public class MinecraftChatListeners
@@ -26,13 +27,13 @@
      if (p.hasPlayedBefore()) {
 
 
-       EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.green).setAuthor(ChatColor.stripColor(LuckPerms.getPlayerGroup(p, LuckPerms.possibleGroups) + " " + LuckPerms.getPlayerGroup(p, LuckPerms.possibleGroups)) + " Joined!", null, "https://crafatar.com/avatars/" + p.getUniqueId() + "?overlay=1");
+       EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.green).setAuthor(ChatColor.stripColor(getPlayerGroup(p, LuckPerms.possibleGroups) + " " + p.getDisplayName()) + " Joined!", null, "https://crafatar.com/avatars/" + p.getUniqueId() + "?overlay=1");
        assert LemonZero.mcchat != null;
        LemonZero.mcchat.sendMessageEmbeds(builder.build(), new net.dv8tion.jda.api.entities.MessageEmbed[0]).queue();
      }
      else {
 
-       EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.YELLOW).setAuthor(ChatColor.stripColor(LuckPerms.getPlayerGroup(p, LuckPerms.possibleGroups) + " " + LuckPerms.getPlayerGroup(p, LuckPerms.possibleGroups)) + " Joined for the First Time!", null, "https://crafatar.com/avatars/" + p.getUniqueId() + "?overlay=1");
+       EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.YELLOW).setAuthor(ChatColor.stripColor(getPlayerGroup(p, LuckPerms.possibleGroups) + " " + p.getDisplayName()) + " Joined for the First Time!", null, "https://crafatar.com/avatars/" + p.getUniqueId() + "?overlay=1");
        assert LemonZero.mcchat != null;
        LemonZero.mcchat.sendMessageEmbeds(builder.build(), new net.dv8tion.jda.api.entities.MessageEmbed[0]).queue();
      }
@@ -46,7 +47,7 @@
      Player p = e.getPlayer();
 
 
-     EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.red).setAuthor(ChatColor.stripColor(LuckPerms.getPlayerGroup(p, LuckPerms.possibleGroups) + " " + LuckPerms.getPlayerGroup(p, LuckPerms.possibleGroups)) + " Left!", null, "https://crafatar.com/avatars/" + p.getUniqueId() + "?overlay=1");
+     EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.red).setAuthor(ChatColor.stripColor(getPlayerGroup(p, LuckPerms.possibleGroups) + " " + getPlayerGroup(p, LuckPerms.possibleGroups)) + " Left!", null, "https://crafatar.com/avatars/" + p.getUniqueId() + "?overlay=1");
      assert LemonZero.mcchat != null;
      LemonZero.mcchat.sendMessageEmbeds(builder.build(), new net.dv8tion.jda.api.entities.MessageEmbed[0]).queue();
      LemonZero.jda.getPresence().setActivity(Activity.playing("LemonZero.minehut.gg: " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers()));
@@ -70,7 +71,7 @@
        else {
 
          Player player = e.getPlayer();
-         LemonZero.mcchat.sendMessage(ChatColor.stripColor("**Default " + player.getDisplayName()) + " »** " + ChatColor.stripColor("**Default " + player.getDisplayName())).queue();
+         LemonZero.mcchat.sendMessage(ChatColor.stripColor("**" + getPlayerGroup(player, possibleGroups) + " " + player.getDisplayName()) + " »** " + e.getMessage()).queue();
        }
      }
    }

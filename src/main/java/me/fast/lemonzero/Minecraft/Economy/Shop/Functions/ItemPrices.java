@@ -1,15 +1,24 @@
 package me.fast.lemonzero.Minecraft.Economy.Shop.Functions;
 
 
+import me.fast.lemonzero.LemonZero;
 import org.bukkit.Material;
 
-import java.util.HashMap;
 
-import static me.fast.lemonzero.LemonZero.getPlugin;
 
 public class ItemPrices {
 
-    public static HashMap<Material, Double> buyPrices = new HashMap<>();
+    private static final LemonZero plugin = LemonZero.getPlugin();
+
+    public static Double getBuyPrice(Material item) {
+       return plugin.getConfig().getDouble("Buy Price " + item);
+    }
+
+    public static Double getSellPrice(Material item) {
+        return plugin.getConfig().getDouble("Sell Price " + item);
+    }
+
+
 
 
 

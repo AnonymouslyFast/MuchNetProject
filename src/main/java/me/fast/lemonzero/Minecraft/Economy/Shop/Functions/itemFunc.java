@@ -22,7 +22,7 @@
      itemlore.add(ChatColor.cc("&7Buy Price: &2$&f" + buyPrice));
      itemlore.add(ChatColor.cc("&7Sell Price: &2$&f" + sellPrice));
      itemlore.add(ChatColor.cc("\n&6Click to open"));
-     Objects.requireNonNull(Objects.requireNonNull(meta).getLore()).addAll(itemlore);
+     Objects.requireNonNull(meta).setLore(itemlore);
      itemm.setItemMeta(meta);
      inv.setItem(slot, itemm);
    }

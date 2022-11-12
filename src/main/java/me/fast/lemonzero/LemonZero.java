@@ -114,13 +114,13 @@ public final class LemonZero extends JavaPlugin {
 
 
 
-    Objects.requireNonNull(getCommand("economy")).setExecutor(new EconomyCommand());
+     Objects.requireNonNull(getCommand("economy")).setExecutor(new EconomyCommand());
      Objects.requireNonNull(getCommand("bal")).setExecutor(new balCommand());
-    Objects.requireNonNull(getCommand("pay")).setExecutor(new payCommand());
+     Objects.requireNonNull(getCommand("pay")).setExecutor(new payCommand());
      Objects.requireNonNull(getCommand("clearchat")).setExecutor(new ClearChatCmd());
-      Objects.requireNonNull(getCommand("staffchat")).setExecutor(new StaffChatCmd());
-   Objects.requireNonNull(getCommand("kick")).setExecutor(new kickCMD());
-   Objects.requireNonNull(getCommand("check")).setExecutor(new checkCMD());
+     Objects.requireNonNull(getCommand("staffchat")).setExecutor(new StaffChatCmd());
+     Objects.requireNonNull(getCommand("kick")).setExecutor(new kickCMD());
+     Objects.requireNonNull(getCommand("check")).setExecutor(new checkCMD());
      Objects.requireNonNull(getCommand("shop")).setExecutor(new ShopCommand());
 
 

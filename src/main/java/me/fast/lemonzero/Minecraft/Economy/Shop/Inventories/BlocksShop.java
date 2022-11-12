@@ -15,7 +15,9 @@
  import org.bukkit.inventory.meta.ItemMeta;
  import org.bukkit.inventory.meta.SkullMeta;
 
-
+ import static me.fast.lemonzero.Minecraft.Economy.Shop.Functions.ItemPrices.getBuyPrice;
+ import static me.fast.lemonzero.Minecraft.Economy.Shop.Functions.ItemPrices.getSellPrice;
+ import static me.fast.lemonzero.Minecraft.Economy.Shop.Functions.itemFunc.item;
 
 
  public class BlocksShop
@@ -62,6 +64,10 @@
      block.setItem(36, a);
 
      //First Row
+       item(Material.GRASS_BLOCK, getBuyPrice(Material.GRASS_BLOCK), getSellPrice(Material.GRASS_BLOCK), 0, block);
+       item(Material.DIRT, getBuyPrice(Material.DIRT), getSellPrice(Material.DIRT), 1, block);
+       item(Material.STONE, getBuyPrice(Material.STONE), getSellPrice(Material.STONE), 2, block);
+       item(Material.COBBLESTONE, getBuyPrice(Material.COBBLESTONE), getSellPrice(Material.COBBLESTONE), 3, block);
 
 
 

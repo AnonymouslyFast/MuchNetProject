@@ -1,0 +1,19 @@
+# Discord Bot
+token: ''
+minecraft-channel-id: ''
+log-channel-id: ''
+StaffChat-Channel-id: ''
+
+#Economy
+
+Buy Price COBBLESTONE: 0.0
+Sell Price COBBLESTONE: 0.0
+
+Buy Price STONE: 0.0
+Sell Price STONE: 0.0
+
+Buy Price GRASS_BLOCK: 0.0
+Sell Price GRASS_BLOCK: 0.0
+
+Buy Price DIRT: 0.0
+Sell Price DIRT: 0.0
