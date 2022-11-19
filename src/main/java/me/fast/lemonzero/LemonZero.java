@@ -19,6 +19,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
@@ -50,7 +51,10 @@ public final class LemonZero extends JavaPlugin {
 
 
      try {
-       jda = JDABuilder.createDefault(Token).build().awaitReady();
+       jda = JDABuilder.createDefault(Token)
+               .enableIntents(GatewayIntent.MESSAGE_CONTENT)
+               .build()
+               .awaitReady();
      } catch (InterruptedException e) {
        throw new RuntimeException(e);
      }
@@ -65,6 +69,8 @@ public final class LemonZero extends JavaPlugin {
      staff = jda.getTextChannelById(Objects.requireNonNull(staffID));
 
     jda.addEventListener(new discordListeners());
+
+
 
 
 

@@ -27,13 +27,13 @@
      if (p.hasPlayedBefore()) {
 
 
-       EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.green).setAuthor(ChatColor.stripColor(getPlayerGroup(p, LuckPerms.possibleGroups) + " " + p.getDisplayName()) + " Joined!", null, "https://crafatar.com/avatars/" + p.getUniqueId() + "?overlay=1");
+       EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.green).setAuthor(ChatColor.stripColor(getPlayerGroup(p, LuckPerms.possibleGroups) + " | " + p.getDisplayName()) + " Joined!", null, "https://crafatar.com/avatars/" + p.getUniqueId() + "?overlay=1");
        assert LemonZero.mcchat != null;
        LemonZero.mcchat.sendMessageEmbeds(builder.build(), new net.dv8tion.jda.api.entities.MessageEmbed[0]).queue();
      }
      else {
 
-       EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.YELLOW).setAuthor(ChatColor.stripColor(getPlayerGroup(p, LuckPerms.possibleGroups) + " " + p.getDisplayName()) + " Joined for the First Time!", null, "https://crafatar.com/avatars/" + p.getUniqueId() + "?overlay=1");
+       EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.YELLOW).setAuthor(ChatColor.stripColor(getPlayerGroup(p, LuckPerms.possibleGroups) + " | " + p.getDisplayName()) + " Joined for the First Time!", null, "https://crafatar.com/avatars/" + p.getUniqueId() + "?overlay=1");
        assert LemonZero.mcchat != null;
        LemonZero.mcchat.sendMessageEmbeds(builder.build(), new net.dv8tion.jda.api.entities.MessageEmbed[0]).queue();
      }
@@ -47,7 +47,7 @@
      Player p = e.getPlayer();
 
 
-     EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.red).setAuthor(ChatColor.stripColor(getPlayerGroup(p, LuckPerms.possibleGroups) + " " + getPlayerGroup(p, LuckPerms.possibleGroups)) + " Left!", null, "https://crafatar.com/avatars/" + p.getUniqueId() + "?overlay=1");
+     EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.red).setAuthor(ChatColor.stripColor(getPlayerGroup(p, LuckPerms.possibleGroups) + " | " + e.getPlayer().getDisplayName() + " Left!"), null, "https://crafatar.com/avatars/" + p.getUniqueId() + "?overlay=1");
      assert LemonZero.mcchat != null;
      LemonZero.mcchat.sendMessageEmbeds(builder.build(), new net.dv8tion.jda.api.entities.MessageEmbed[0]).queue();
      LemonZero.jda.getPresence().setActivity(Activity.playing("LemonZero.minehut.gg: " + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers()));
@@ -66,10 +66,9 @@
 
        Player p = e.getPlayer();
        if (e.getMessage().contains("!")) {
-         if (p.hasPermission("op"));
-       }
-       else {
+           if (p.hasPermission("op")) ;
 
+       } else {
          Player player = e.getPlayer();
          LemonZero.mcchat.sendMessage(ChatColor.stripColor("**" + getPlayerGroup(player, possibleGroups) + " " + player.getDisplayName()) + " »** " + e.getMessage()).queue();
        }

@@ -13,7 +13,7 @@
    @EventHandler
    public void onCommand(PlayerCommandPreprocessEvent e) {
      Player p = e.getPlayer();
-     LemonZero.logChan.sendMessage("**LemonZero** - " + String.valueOf(TimeFormat.TIME_LONG.now()) + " " + p.getName() + " Executed `" + e.getMessage() + "`").queue();
+     LemonZero.logChan.sendMessage("**LemonZero** - " + TimeFormat.TIME_LONG.now() + " " + p.getName() + " Executed `" + e.getMessage() + "`").queue();
    }
  }
 

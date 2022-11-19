@@ -9,15 +9,19 @@
  import org.jetbrains.annotations.NotNull;
 
 
+
+
  public class discordListeners
    extends ListenerAdapter
  {
    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
      if (event.getChannel() == LemonZero.mcchat) {
        Member member = event.getMember();
-       if (member == null || member.getUser().isBot())
-         return;  String message = event.getMessage().getContentDisplay();
-       Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&b[&7Discord&b] &f" + member.getEffectiveName() + "&8: &f" + message));
+       if (member == null || member.getUser().isBot()) {
+       } else {
+           String msg = event.getMessage().getContentDisplay();
+           Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&b[&7Discord&b] &f" + member.getEffectiveName() + "&8: &f" + msg));
+       }
      }
    }
  }
