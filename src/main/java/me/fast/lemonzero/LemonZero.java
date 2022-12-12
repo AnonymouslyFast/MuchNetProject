@@ -5,6 +5,14 @@ import java.util.Objects;
 
 
 import me.fast.lemonzero.Discord.discordListeners.discordListeners;
+import me.fast.lemonzero.FadeCore.BroadcastCommand;
+import me.fast.lemonzero.FadeCore.Commands.Gamemode.CreativeCommand;
+import me.fast.lemonzero.FadeCore.Commands.Gamemode.SpectatorCommand;
+import me.fast.lemonzero.FadeCore.Commands.Gamemode.SurvivalCommand;
+import me.fast.lemonzero.FadeCore.FlyCommand;
+import me.fast.lemonzero.FadeCore.RulesCommand;
+import me.fast.lemonzero.FadeCore.Teleport.TPHereCommand;
+import me.fast.lemonzero.FadeCore.Teleport.TeleportCommand;
 import me.fast.lemonzero.Minecraft.Economy.EconomyCommand;
 import me.fast.lemonzero.Minecraft.Economy.SLAPI;
 import me.fast.lemonzero.Minecraft.Economy.Shop.ShopCommand;
@@ -118,6 +126,16 @@ public final class LemonZero extends JavaPlugin {
        }
 }
 
+       for (Class<?> clazz : (new Reflections(packname + ".FadeCore")).getSubTypesOf(Listener.class)) {
+           try {
+               Listener listener = (Listener) clazz.getDeclaredConstructor(new Class[0]).newInstance(new Object[0]);
+               getServer().getPluginManager().registerEvents(listener, this);
+           } catch (InstantiationException|IllegalAccessException|java.lang.reflect.InvocationTargetException|NoSuchMethodException e) {
+
+               throw new RuntimeException(e);
+           }
+       }
+
 
 
      Objects.requireNonNull(getCommand("economy")).setExecutor(new EconomyCommand());
@@ -128,6 +146,14 @@ public final class LemonZero extends JavaPlugin {
      Objects.requireNonNull(getCommand("kick")).setExecutor(new kickCMD());
      Objects.requireNonNull(getCommand("check")).setExecutor(new checkCMD());
      Objects.requireNonNull(getCommand("shop")).setExecutor(new ShopCommand());
+     Objects.requireNonNull(getCommand("gmc")).setExecutor(new CreativeCommand());
+     Objects.requireNonNull(getCommand("gms")).setExecutor(new SurvivalCommand());
+     Objects.requireNonNull(getCommand("gmsp")).setExecutor(new SpectatorCommand());
+     Objects.requireNonNull(getCommand("fly")).setExecutor(new FlyCommand());
+     Objects.requireNonNull(getCommand("tp")).setExecutor(new TeleportCommand());
+     Objects.requireNonNull(getCommand("tphere")).setExecutor(new TPHereCommand());
+     Objects.requireNonNull(getCommand("broadcast")).setExecutor(new BroadcastCommand());
+     Objects.requireNonNull(getCommand("rules")).setExecutor(new RulesCommand());
 
 
     plugin = this;

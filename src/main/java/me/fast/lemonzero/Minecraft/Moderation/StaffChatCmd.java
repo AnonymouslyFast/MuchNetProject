@@ -9,8 +9,7 @@
  import org.bukkit.command.CommandSender;
  import org.bukkit.entity.Player;
  import org.jetbrains.annotations.NotNull;
-
-
+ 
 
 
  public class StaffChatCmd
@@ -27,9 +26,10 @@
    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
      if (sender instanceof Player) {
        Player p = (Player)sender;
-       if (p.hasPermission("staff")) {     if (args.length > 0) {
-           ChatColor.broadcastToPerm(ChatColor.cc("&8&l[&6&lStaffChat&8&l] &f" + p.getName() + "&8: &f" + arrayToString(args)), "staff");
-           LemonZero.staff.sendMessage("**LemonZero** - " + p.getName() + ": " + arrayToString(args)).queue();
+       if (p.hasPermission("staff")) {
+           if (args.length > 0) {
+            ChatColor.broadcastToPerm(ChatColor.cc("&8&l[&6&lStaffChat&8&l] &f" + p.getName() + "&8: &f" + arrayToString(args)), "staff");
+            LemonZero.staff.sendMessage("**LemonZero** - " + p.getName() + ": " + arrayToString(args)).queue();
         }
          else if (StaffchatList.contains(p)) {
            StaffchatList.remove(p);
@@ -46,7 +46,7 @@
        }
      } else {
 
-       System.out.println("This is only for Players!!");
+         LemonZero.getPlugin().getLogger().warning("This is only for Players!");
      }
 
 

@@ -27,3 +27,29 @@ commands:
   shop:
     description: Main command for Server!
     usage: <command>
+  gmc:
+    description: Sets your gamemode to creative!
+  gms:
+    description: Sets your gamemode to survival!
+  gmsp:
+    description: Sets your gamemode to spectator!
+  fly:
+    description: Turns on/off fly mode!
+  help:
+    description: Get help about certain things!
+  tp:
+    description: Teleport around the server!
+    aliaes:
+      - teleport
+  tphere:
+    description: Teleport a player to you!
+    aliases:
+      - teleporthere
+  broadcast:
+    description: Broadcast a message to the server!
+    aliases:
+      - bc
+  rules:
+    description: See the rules of the server.
+
+
