@@ -1,7 +1,9 @@
 package me.fast.lemonzero;
 import java.awt.Color;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 
 
 import me.fast.lemonzero.Discord.discordListeners.discordListeners;
@@ -13,6 +15,11 @@ import me.fast.lemonzero.FadeCore.FlyCommand;
 import me.fast.lemonzero.FadeCore.RulesCommand;
 import me.fast.lemonzero.FadeCore.Teleport.TPHereCommand;
 import me.fast.lemonzero.FadeCore.Teleport.TeleportCommand;
+import me.fast.lemonzero.LemonExtras.AfkCommand;
+import me.fast.lemonzero.LemonExtras.Homes.DelHomCommand;
+import me.fast.lemonzero.LemonExtras.Homes.HomeCommand;
+import me.fast.lemonzero.LemonExtras.Homes.HomeFiles;
+import me.fast.lemonzero.LemonExtras.Homes.Se6HomeCommand;
 import me.fast.lemonzero.Minecraft.Economy.EconomyCommand;
 import me.fast.lemonzero.Minecraft.Economy.SLAPI;
 import me.fast.lemonzero.Minecraft.Economy.Shop.ShopCommand;
@@ -23,11 +30,15 @@ import me.fast.lemonzero.Minecraft.Moderation.StaffChatCmd;
 import me.fast.lemonzero.Minecraft.Moderation.checkCMD;
 import me.fast.lemonzero.Minecraft.Moderation.kickCMD;
 import me.fast.lemonzero.Minecraft.Utitites.LuckPerms;
+import me.fast.lemonzero.SLAPI.Commands.SLAPICommand;
+import me.fast.lemonzero.SLAPI.Commands.SetSpawnCommand;
+import me.fast.lemonzero.SLAPI.Commands.SpawnCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import org.bukkit.Location;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
@@ -41,7 +52,11 @@ public final class LemonZero extends JavaPlugin {
    public static TextChannel staff;
    private static LemonZero plugin;
 
+    private HashMap<UUID, Location> homes;
+    private HomeFiles files;
+
    public void onEnable() {
+       files.init();
      getConfig().options().copyDefaults();
      saveDefaultConfig();
 
@@ -136,6 +151,16 @@ public final class LemonZero extends JavaPlugin {
            }
        }
 
+       for (Class<?> clazz : (new Reflections(packname + ".SLAPI.Listeners")).getSubTypesOf(Listener.class)) {
+           try {
+               Listener listener = (Listener) clazz.getDeclaredConstructor(new Class[0]).newInstance(new Object[0]);
+               getServer().getPluginManager().registerEvents(listener, this);
+           } catch (InstantiationException|IllegalAccessException|java.lang.reflect.InvocationTargetException|NoSuchMethodException e) {
+
+               throw new RuntimeException(e);
+           }
+       }
+
 
 
      Objects.requireNonNull(getCommand("economy")).setExecutor(new EconomyCommand());
@@ -154,10 +179,19 @@ public final class LemonZero extends JavaPlugin {
      Objects.requireNonNull(getCommand("tphere")).setExecutor(new TPHereCommand());
      Objects.requireNonNull(getCommand("broadcast")).setExecutor(new BroadcastCommand());
      Objects.requireNonNull(getCommand("rules")).setExecutor(new RulesCommand());
+     Objects.requireNonNull(getCommand("afk")).setExecutor(new AfkCommand());
+     Objects.requireNonNull(getCommand("sethome")).setExecutor(new Se6HomeCommand());
+     Objects.requireNonNull(getCommand("home")).setExecutor(new HomeCommand());
+     Objects.requireNonNull(getCommand("delhome")).setExecutor(new DelHomCommand());
+     Objects.requireNonNull(getCommand("setspawn")).setExecutor(new SetSpawnCommand());
+     Objects.requireNonNull(getCommand("spawn")).setExecutor(new SpawnCommand());
+     Objects.requireNonNull(getCommand("slapi")).setExecutor(new SLAPICommand());
 
 
-    plugin = this;
+
+       plugin = this;
    }
+
 
 
 
@@ -167,6 +201,7 @@ public final class LemonZero extends JavaPlugin {
 
    public void onDisable() {
      SLAPI.saveBalances();
+     files.terminate();
 
 
 
@@ -181,6 +216,27 @@ public final class LemonZero extends JavaPlugin {
    public static LemonZero getPlugin() {
     return plugin;
   }
+  //Homes
+  public void  addHome(UUID id, Location location) {
+      this.homes.put(id, location);
+  }
+
+    public Location getHome(UUID id) {
+        return this.homes.get(id);
+    }
+
+    public boolean hasHome(UUID id) {
+        return this.homes.containsKey(id);
+    }
+
+    public HashMap<UUID, Location> getHomes() {
+        return homes;
+    }
+
+    public HomeFiles getFiles() {
+        return files;
+    }
+
  }
 
 

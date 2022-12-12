@@ -51,5 +51,23 @@ commands:
       - bc
   rules:
     description: See the rules of the server.
+  afk:
+    description: Toggle your AFK status!
+  sethome:
+    description: Set your home!
+  home:
+    description: Go to your home!
+  delhome:
+    description: Delete your home!
+  slapi:
+    description: SLAPI for life!
+    permission: slapi.use
+    permission-message: &cThis command is disabled!
+  setspawn:
+    description: Set the server Spawn
+    permission: lemoncore.setspawn
+    permission-message: &cNo permission!
+  spawn:
+    description: Go to spawn!
 
 
