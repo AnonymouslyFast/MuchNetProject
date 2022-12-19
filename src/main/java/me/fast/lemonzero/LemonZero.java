@@ -56,6 +56,7 @@ public final class LemonZero extends JavaPlugin {
     private HomeFiles files;
 
    public void onEnable() {
+    new VerifySLAPI(this);
        files.init();
      getConfig().options().copyDefaults();
      saveDefaultConfig();
@@ -186,10 +187,11 @@ public final class LemonZero extends JavaPlugin {
      Objects.requireNonNull(getCommand("setspawn")).setExecutor(new SetSpawnCommand());
      Objects.requireNonNull(getCommand("spawn")).setExecutor(new SpawnCommand());
      Objects.requireNonNull(getCommand("slapi")).setExecutor(new SLAPICommand());
-
+     Objects.requireNonNull(getCommand("verify")).setExecutor(new MinecraftCommand());
 
 
        plugin = this;
+       Bukkit.getScheduler().runTaskLater((Plugin)plugin, VerifySLAPI::loadVerified, 30L);
    }
 
 

@@ -69,5 +69,8 @@ commands:
     permission-message: &cNo permission!
   spawn:
     description: Go to spawn!
+  verify:
+    usage: <command>
+    description: get a unique code to verify your discord account to minecraft for rewards!
 
 
