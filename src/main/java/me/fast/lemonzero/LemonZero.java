@@ -93,6 +93,7 @@ public final class LemonZero extends JavaPlugin {
      staff = jda.getTextChannelById(Objects.requireNonNull(staffID));
 
     jda.addEventListener(new discordListeners());
+    jda.addEventListener(new VerifyDiscordCommand());
 
 
 
