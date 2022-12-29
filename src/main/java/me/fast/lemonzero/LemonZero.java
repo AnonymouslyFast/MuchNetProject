@@ -6,30 +6,33 @@ import java.util.Objects;
 import java.util.UUID;
 
 
-import me.fast.lemonzero.Discord.discordListeners.discordListeners;
-import me.fast.lemonzero.FadeCore.BroadcastCommand;
-import me.fast.lemonzero.FadeCore.Commands.Gamemode.CreativeCommand;
-import me.fast.lemonzero.FadeCore.Commands.Gamemode.SpectatorCommand;
-import me.fast.lemonzero.FadeCore.Commands.Gamemode.SurvivalCommand;
-import me.fast.lemonzero.FadeCore.FlyCommand;
-import me.fast.lemonzero.FadeCore.RulesCommand;
-import me.fast.lemonzero.FadeCore.Teleport.TPHereCommand;
-import me.fast.lemonzero.FadeCore.Teleport.TeleportCommand;
-import me.fast.lemonzero.LemonExtras.AfkCommand;
-import me.fast.lemonzero.LemonExtras.Homes.DelHomCommand;
-import me.fast.lemonzero.LemonExtras.Homes.HomeCommand;
-import me.fast.lemonzero.LemonExtras.Homes.HomeFiles;
-import me.fast.lemonzero.LemonExtras.Homes.Se6HomeCommand;
-import me.fast.lemonzero.Minecraft.Economy.EconomyCommand;
-import me.fast.lemonzero.Minecraft.Economy.SLAPI;
-import me.fast.lemonzero.Minecraft.Economy.Shop.ShopCommand;
-import me.fast.lemonzero.Minecraft.Economy.balCommand;
-import me.fast.lemonzero.Minecraft.Economy.payCommand;
-import me.fast.lemonzero.Minecraft.Moderation.ClearChatCmd;
-import me.fast.lemonzero.Minecraft.Moderation.StaffChatCmd;
-import me.fast.lemonzero.Minecraft.Moderation.checkCMD;
-import me.fast.lemonzero.Minecraft.Moderation.kickCMD;
-import me.fast.lemonzero.Minecraft.Utitites.LuckPerms;
+import me.fast.lemonzero.discord.Verify.MinecraftCommand;
+import me.fast.lemonzero.discord.Verify.VerifyDiscordCommand;
+import me.fast.lemonzero.discord.Verify.VerifySLAPI;
+import me.fast.lemonzero.discord.discordListeners.discordListeners;
+import me.fast.lemonzero.fadecore.BroadcastCommand;
+import me.fast.lemonzero.fadecore.Commands.Gamemode.CreativeCommand;
+import me.fast.lemonzero.fadecore.Commands.Gamemode.SpectatorCommand;
+import me.fast.lemonzero.fadecore.Commands.Gamemode.SurvivalCommand;
+import me.fast.lemonzero.fadecore.FlyCommand;
+import me.fast.lemonzero.fadecore.RulesCommand;
+import me.fast.lemonzero.fadecore.Teleport.TPHereCommand;
+import me.fast.lemonzero.fadecore.Teleport.TeleportCommand;
+import me.fast.lemonzero.lemonextras.AfkCommand;
+import me.fast.lemonzero.lemonextras.Homes.DelHomCommand;
+import me.fast.lemonzero.lemonextras.Homes.HomeCommand;
+import me.fast.lemonzero.lemonextras.Homes.HomeFiles;
+import me.fast.lemonzero.lemonextras.Homes.Se6HomeCommand;
+import me.fast.lemonzero.minecraft.economy.EconomyCommand;
+import me.fast.lemonzero.minecraft.economy.SLAPI;
+import me.fast.lemonzero.minecraft.economy.Shop.ShopCommand;
+import me.fast.lemonzero.minecraft.economy.balCommand;
+import me.fast.lemonzero.minecraft.economy.payCommand;
+import me.fast.lemonzero.minecraft.moderation.ClearChatCmd;
+import me.fast.lemonzero.minecraft.moderation.StaffChatCmd;
+import me.fast.lemonzero.minecraft.moderation.checkCMD;
+import me.fast.lemonzero.minecraft.moderation.kickCMD;
+import me.fast.lemonzero.minecraft.utils.LuckPerms;
 import me.fast.lemonzero.SLAPI.Commands.SLAPICommand;
 import me.fast.lemonzero.SLAPI.Commands.SetSpawnCommand;
 import me.fast.lemonzero.SLAPI.Commands.SpawnCommand;
@@ -38,6 +41,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -47,7 +51,7 @@ import org.reflections.Reflections;
 public final class LemonZero extends JavaPlugin {
 
   public static JDA jda;
-   public static TextChannel mcchat;
+   public static TextChannel mcChat;
    public static TextChannel logChan;
    public static TextChannel staff;
    private static LemonZero plugin;
@@ -84,7 +88,7 @@ public final class LemonZero extends JavaPlugin {
      }
 
      String mcchatid = getConfig().getString("minecraft-channel-id");
-     mcchat = jda.getTextChannelById(Objects.requireNonNull(mcchatid));
+       mcChat = jda.getTextChannelById(Objects.requireNonNull(mcchatid));
 
      String logchatid = getConfig().getString("log-channel-id");
      logChan = jda.getTextChannelById(Objects.requireNonNull(logchatid));
@@ -103,8 +107,8 @@ public final class LemonZero extends JavaPlugin {
 
 
     EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.GREEN).setDescription(":white_check_mark: **Server Started!**").setTimestamp(Instant.now());
-     assert mcchat != null;
-     mcchat.sendMessageEmbeds(builder.build(), new net.dv8tion.jda.api.entities.MessageEmbed[0]).queue();
+     assert mcChat != null;
+       mcChat.sendMessageEmbeds(builder.build(), new net.dv8tion.jda.api.entities.MessageEmbed[0]).queue();
 
 
 
@@ -192,7 +196,7 @@ public final class LemonZero extends JavaPlugin {
 
 
        plugin = this;
-       Bukkit.getScheduler().runTaskLater((Plugin)plugin, VerifySLAPI::loadVerified, 30L);
+       Bukkit.getScheduler().runTaskLater(plugin, VerifySLAPI::loadVerified, 30L);
    }
 
 
@@ -210,8 +214,8 @@ public final class LemonZero extends JavaPlugin {
 
 
      EmbedBuilder builder = (new EmbedBuilder()).setColor(Color.RED).setDescription(":x: **Server Stoped!**").setTimestamp(Instant.now());
-     assert mcchat != null;
-     mcchat.sendMessageEmbeds(builder.build(), new net.dv8tion.jda.api.entities.MessageEmbed[0]).queue();
+     assert mcChat != null;
+       mcChat.sendMessageEmbeds(builder.build(), new net.dv8tion.jda.api.entities.MessageEmbed[0]).queue();
 
     jda.shutdown();
    }
