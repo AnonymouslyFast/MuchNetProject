@@ -7,6 +7,7 @@ import java.util.Objects;
 import me.fast.lemonzero.listeners.discord.DiscordListeners;
 import me.fast.lemonzero.listeners.minecraft.JoinListener;
 import me.fast.lemonzero.utils.EventUtils;
+import me.fast.lemonzero.utils.MessageUtils;
 import me.fast.lemonzero.utils.commands.CommandUtils;
 import me.fast.lemonzero.utils.data.DataManager;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -63,6 +64,7 @@ public final class LemonZero extends JavaPlugin {
            mcChat.sendMessageEmbeds(builder.build(), new net.dv8tion.jda.api.entities.MessageEmbed[0]).queue();
        } else {
            hasJDA = false;
+           MessageUtils.log("&eWarning: Bot Token is not set!");
        }
        EventUtils.registerMinecraftListeners();
 
